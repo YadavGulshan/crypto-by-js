@@ -14,6 +14,11 @@ export default function useSolanaProvider() {
   const [createdTokenPublicKey, setCreatedTokenPublicKey] = useState('');
   const [mintingWalletSecretKey, setMintingWalletSecretKey] = useState('');
 
+  // You cannot mint more, 
+  // when the supply for the tokens is capped. 
+  // Thus, for that we will be using the supplyCapped state.
+  const [isSupplyCapped, setIsSupplyCapped] = useState(false);
+
 
   // Basic stuff such as connection, provider, etc. goes here..
   const getProvider = () => {
@@ -108,7 +113,7 @@ export default function useSolanaProvider() {
       // The public key of the person that has the minting authority over the token (mintingFromWallet.publicKey)
       // ( Since the number of decimal places mentioned earlier is 6, now 1000000 will mean 1 token mint)
       */
-      await creatorToken.mintTo(fromTokenAccount.address, mintingFromWallet.publicKey, [], 100000)
+      await creatorToken.mintTo(fromTokenAccount.address, mintingFromWallet.publicKey, [], 1000000)
 
       // Setting the associated account with the public key of the phantom wallet
       const toTokenAccount = await creatorToken.getOrCreateAssociatedAccountInfo(mintRequester);
