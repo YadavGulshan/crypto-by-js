@@ -77,17 +77,22 @@ export default function useSolanaProvider() {
       // Setting up the new connection.
       const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
-      // Minting the requester
+      /*
+      // Creating a minting wallet, where all the minted tokens will be stored.
+      // We can also directly mint tokens in our wallet 
+      // but it requires the secret key of the wallet, 
+      // thus we create a new wallet.
+      */
       // @ts-ignore
       const mintRequester = await provider.publicKey;
       const mintingFromWallet = Keypair.generate();
       setMintingWalletSecretKey(JSON.stringify(mintingFromWallet.secretKey));
 
 
-      // Writing signatures
+      // Requesting an air drop to the minting wallet.
       const fromAirDropSignature = await connection.requestAirdrop(mintingFromWallet.publicKey, LAMPORTS_PER_SOL);
 
-      // Confirming the transaction
+      // Confirming the transaction in the minting wallet.
       await connection.confirmTransaction(fromAirDropSignature, "confirmed");
 
       // createMint is assigning the token to the minting wallet
@@ -105,7 +110,7 @@ export default function useSolanaProvider() {
       */
       await creatorToken.mintTo(fromTokenAccount.address, mintingFromWallet.publicKey, [], 100000)
 
-      
+      // Setting the associated account with the public key of the phantom wallet
       const toTokenAccount = await creatorToken.getOrCreateAssociatedAccountInfo(mintRequester);
 
       const transaction = new Transaction().add(
@@ -128,6 +133,7 @@ export default function useSolanaProvider() {
     catch (err) {
       console.log(err);
       alert(err);
+      setLoading(false)
     }
   }
 
