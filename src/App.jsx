@@ -1,24 +1,38 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [walletConnected, setWalletConnected] = useState(false);
+  const [provider, setProvider] = useState();
+  const [loading, setLoading] = useState();
+
+
+  const getProvider = () =>{
+    if("solana" in window){
+      const provider = window.solana;
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>
+        Create your own token using JS
+      </h1>
+
+      {
+        walletConnected ? (
+          <p>
+            <strong>
+              Public key:
+            </strong>
+            {provider.publicKey.toString()}
+          </p>
+        ) : (
+          <p>
+          </p>
+        )
+      }
+    </>
   );
 }
 
