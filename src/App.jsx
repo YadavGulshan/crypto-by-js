@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import { Connection, clusterApiUrl, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
+import {getProvider} from './tools/provider'
 
 function App() {
   const [walletConnected, setWalletConnected] = useState(false);
@@ -8,16 +9,6 @@ function App() {
   const [loading, setLoading] = useState();
 
 
-  const getProvider = () => {
-    if ("solana" in window) {
-      const provider = window.solana;
-      if (provider.isPhantom) {
-        return provider;
-      }
-    } else {
-      window.open("https://www.phantom.app/", "_blank");
-    }
-  };
 
   const walletConnectionHelper = async () => {
     if (walletConnected) {
