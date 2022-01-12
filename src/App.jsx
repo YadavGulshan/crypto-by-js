@@ -3,7 +3,7 @@ import { useMyContext } from './context/context'
 const App = () => {
   const { loading, walletConnected,
     walletConnectionHelper, provider,
-    airDropHelper } = useMyContext();
+    airDropHelper, initialMintHelper } = useMyContext();
   return (
     <>
       <h1>
@@ -24,6 +24,10 @@ const App = () => {
                 <p>
                   AirDrop 1 SOL into your wallet
                   <button onClick={airDropHelper} disabled={loading}>Drop</button>
+                </p> 
+                <p>
+                  Create your own token
+                  <button disabled={loading} onClick={initialMintHelper}>Initial Mint </button>
                 </p>
               </div>
             ) : (
