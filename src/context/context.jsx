@@ -1,12 +1,13 @@
 import { createContext, useContext } from "react";
-
+import solanaProvider from "../tools/solanaProvider";
 
 const myContext = createContext({});
 
-export function MyProvider(props: any) {
+export function MyProvider({children}) {
+    const solana = solanaProvider();
     return (
-        <myContext.Provider value={props.value}>
-            {props.children}
+        <myContext.Provider value={solana}>
+            {children}
         </myContext.Provider>
     );
 }
