@@ -148,5 +148,8 @@ export default function useSolanaProvider() {
     walletConnectionHelper,
     airDropHelper,
     initialMintHelper,
+    isTokenCreated,
+    createdTokenPublicKey,
+    mintingWalletSecretKey
   }
 }
