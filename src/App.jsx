@@ -4,7 +4,7 @@ const App = () => {
   const { loading, walletConnected,
     walletConnectionHelper, provider,
     airDropHelper, initialMintHelper,
-    supplyCapped, mintAgainHelper } = useMyContext();
+    supplyCapped, reMintHelper } = useMyContext();
   return (
     <>
       <h1>
@@ -28,7 +28,7 @@ const App = () => {
                 </p>
                 <li>
                   Mint More 100 tokens:
-                  <button disabled={loading || supplyCapped} onClick={mintAgainHelper}>
+                  <button disabled={loading || supplyCapped} onClick={reMintHelper}>
                     Mint Again
                   </button>
                 </li>

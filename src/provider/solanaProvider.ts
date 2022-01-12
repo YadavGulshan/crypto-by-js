@@ -11,13 +11,14 @@ export default function useSolanaProvider() {
 
   // For minting the token
   const [isTokenCreated, setIsTokenCreated] = useState(false);
-  const [createdTokenPublicKey, setCreatedTokenPublicKey] = useState('');
+  const [createdTokenPublicKey, setCreatedTokenPublicKey] = useState(PublicKey.default);
   const [mintingWalletSecretKey, setMintingWalletSecretKey] = useState('');
 
   // You cannot mint more, 
   // when the supply for the tokens is capped. 
   // Thus, for that we will be using the supplyCapped state.
   const [isSupplyCapped, setIsSupplyCapped] = useState(false);
+
 
 
   // Basic stuff such as connection, provider, etc. goes here..
@@ -130,7 +131,7 @@ export default function useSolanaProvider() {
       );
       const signature = await sendAndConfirmTransaction(connection, transaction, [mintingFromWallet]);
       console.log(signature); //TODO: Remove this line
-      setCreatedTokenPublicKey(creatorToken.publicKey.toString());
+      setCreatedTokenPublicKey(creatorToken.publicKey);
       setIsTokenCreated(true);
       setLoading(false);
 
@@ -139,6 +140,47 @@ export default function useSolanaProvider() {
       console.log(err);
       alert(err);
       setLoading(false)
+    }
+  }
+
+  // Re-minting the token
+  const reMintHelper = async () => {
+    try {
+      setLoading(true);
+
+      // Setting up the connection with devnet
+      const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+      const createMintingWallet = Keypair.fromSecretKey(Uint8Array.from(Object.values(JSON.parse(mintingWalletSecretKey))));
+
+      // @ts-ignore
+      const mintRequester = await provider.publicKey;
+      const fromAirDropSignature = await connection.requestAirdrop(createMintingWallet.publicKey, LAMPORTS_PER_SOL);
+      await connection.confirmTransaction(fromAirDropSignature, "confirmed");
+
+      const creatorToken = new Token(connection, createdTokenPublicKey, TOKEN_PROGRAM_ID, createMintingWallet);
+      const fromTokenAccount = await creatorToken.getOrCreateAssociatedAccountInfo(createMintingWallet.publicKey);
+      const toTokenAccount = await creatorToken.getOrCreateAssociatedAccountInfo(mintRequester);
+      await creatorToken.mintTo(fromTokenAccount.address, createMintingWallet.publicKey, [], 100000000);
+
+      const transaction = new Transaction().add(
+        Token.createTransferInstruction(
+          TOKEN_PROGRAM_ID,
+          fromTokenAccount.address,
+          toTokenAccount.address,
+          createMintingWallet.publicKey,
+          [],
+          100000000
+        )
+      );
+
+      await sendAndConfirmTransaction(connection, transaction, [createMintingWallet]);
+
+      setLoading(false);
+
+    } catch (error) {
+      console.log(error);
+      alert(error);
+      setLoading(false);
     }
   }
 
@@ -155,6 +197,7 @@ export default function useSolanaProvider() {
     initialMintHelper,
     isTokenCreated,
     createdTokenPublicKey,
-    mintingWalletSecretKey
+    mintingWalletSecretKey,
+    reMintHelper
   }
 }

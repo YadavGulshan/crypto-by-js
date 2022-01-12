@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import solanaProvider from "../tools/solanaProvider";
+import solanaProvider from "../provider/solanaProvider";
 
 const myContext = createContext({});
 
