@@ -1,5 +1,6 @@
 import './App.css';
 import { useState } from 'react';
+import { Connection, clusterApiUrl, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
 
 function App() {
   const [walletConnected, setWalletConnected] = useState(false);
@@ -36,6 +37,24 @@ function App() {
       setLoading(false);
     }
   }
+
+  const airDropHelper = async () => {
+    try {
+      setLoading(true);
+      const connection = new Connection(
+        clusterApiUrl("devnet"),
+        "confirmed"
+      );
+
+      const fromAirDropSignature = await connection.requestAirdrop(new PublicKey(provider.publicKey), LAMPORTS_PER_SOL);
+      await connection.confirmTransaction(fromAirDropSignature, "confirmed");
+      alert("Airdrop Successful");
+      setLoading(false);
+    } catch (error) {
+      alert(error);
+      setLoading(false);
+    }
+  }
   return (
     <>
       <h1>
@@ -46,12 +65,18 @@ function App() {
         <div>
           {
             walletConnected ? (
-              <p>
-                <strong>
-                  Public key:
-                </strong>
-                {provider.publicKey.toString()}
-              </p>
+              <div>
+                <p>
+                  <strong>
+                    Public key:
+                  </strong>
+                  {provider.publicKey.toString()}
+                </p>
+                <p>
+                  AirDrop 1 SOL into your wallet
+                  <button onClick={airDropHelper} disabled={loading}>Drop</button>
+                </p>
+              </div>
             ) : (
               <p>
               </p>
