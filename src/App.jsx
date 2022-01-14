@@ -11,11 +11,10 @@ const App = () => {
   return (
     <>
       <Typing />
-      <h1>
-        Create your own token using JS
-      </h1>
-
-      {loading ? <div>Loading...</div> : (
+      {
+      loading ? 
+      <div>Loading...</div> : 
+      (
         <div>
           {
             walletConnected ? (
