@@ -1,13 +1,6 @@
 import React from 'react'
 
 const card = () => {
-    // var animate = () =>{
-    //     var elem = document.getElementById("animate");
-    //     elem.style.fill = "red";
-    // //    setInterval(()=>{
-    // //        elem.style.fill = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-    // //    }, 1000)
-    // }
     return (
         <div className="absolute h-screen w-screen -z-10 overflow-clip">
             <svg viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">

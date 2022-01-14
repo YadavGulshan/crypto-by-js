@@ -57,3 +57,7 @@
         fill: #ffffff;
     }
 }
+
+path:hover {
+    fill: #61dafb;
+}
