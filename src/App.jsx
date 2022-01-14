@@ -1,4 +1,5 @@
 import './App.css';
+import Typing from './components/typing';
 import { useMyContext } from './context/context'
 const App = () => {
   const { loading, walletConnected,
@@ -9,6 +10,7 @@ const App = () => {
     isSupplyCapped, capTheSupply } = useMyContext();
   return (
     <>
+      <Typing />
       <h1>
         Create your own token using JS
       </h1>
@@ -46,9 +48,9 @@ const App = () => {
                   Minting Wallet Secret key:
                   {mintingWalletSecretKey}
                 </p>
-                {isSupplyCapped?(<div>
-                    Fuck, Supply is capped
-                </div>):(<div>
+                {isSupplyCapped ? (<div>
+                  Fuck, Supply is capped
+                </div>) : (<div>
                   <p>Cap the supply
                     <button onClick={capTheSupply} disabled={isSupplyCapped}>Cap it!</button>
                   </p>
