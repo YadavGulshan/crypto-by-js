@@ -4,7 +4,8 @@ const App = () => {
   const { loading, walletConnected,
     walletConnectionHelper, provider,
     airDropHelper, initialMintHelper,
-    supplyCapped, reMintHelper } = useMyContext();
+    supplyCapped, reMintHelper,
+    transferTokenHelper, mintingWalletSecretKey } = useMyContext();
   return (
     <>
       <h1>
@@ -35,6 +36,14 @@ const App = () => {
                 <p>
                   Create your own token
                   <button disabled={loading} onClick={initialMintHelper}>Initial Mint </button>
+                </p>
+                <p>
+                  Transfer Token
+                  <button disabled={loading} onClick={transferTokenHelper}>Transfer</button>
+                </p>
+                <p>
+                  Minting Wallet Secret key:
+                  {mintingWalletSecretKey}
                 </p>
               </div>
             ) : (
