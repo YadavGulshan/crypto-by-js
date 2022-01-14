@@ -7,6 +7,7 @@ import { sendToFriend } from "../functions/sendToFirend";
 import { mintAgain } from "../functions/mintAgain";
 import { MintTokens } from "../functions/mintToken";
 import { airDrop } from "../functions/airdrop";
+import { capSupply } from "../functions/capsupply";
 export default function useSolanaProvider() {
 
   // Basic stuff such as connection, provider, etc.
@@ -22,7 +23,7 @@ export default function useSolanaProvider() {
   // You cannot mint more, 
   // when the supply for the tokens is capped. 
   // Thus, for that we will be using the supplyCapped state.
-  // const [isSupplyCapped, setIsSupplyCapped] = useState(false);
+  const [isSupplyCapped, setIsSupplyCapped] = useState(false);
 
 
 
@@ -120,6 +121,18 @@ export default function useSolanaProvider() {
     }
   }
 
+  const capTheSupply =async()=>{
+    try{
+      setLoading(true);
+      capSupply(mintingWalletSecretKey, createdTokenPublicKey);
+      setIsSupplyCapped(true);
+      setLoading(false);
+    }catch(error){
+      alert(error);
+      console.log(error);
+      setLoading(false);
+    }
+  }
   return {
     walletConnected,
     setWalletConnected,
@@ -135,7 +148,9 @@ export default function useSolanaProvider() {
     createdTokenPublicKey,
     mintingWalletSecretKey,
     reMintHelper,
-    transferTokenHelper
+    transferTokenHelper,
+    capTheSupply,
+    isSupplyCapped,
   }
 }
 
