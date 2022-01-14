@@ -29,7 +29,7 @@ class Typing extends React.Component {
   render() {
     return (
       <>
-      <div>
+      <div className="m-10 text-6xl text-center text-transparent bg-clip-text title">
         Welcome to&nbsp;
         <span
           style={{  }}
