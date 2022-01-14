@@ -1,5 +1,6 @@
 import './App.css';
 import Typing from './components/animation/typing';
+import Card from './components/card';
 import { useMyContext } from './context/context'
 const App = () => {
   const { loading, walletConnected,
@@ -9,30 +10,31 @@ const App = () => {
     transferTokenHelper, mintingWalletSecretKey,
     isSupplyCapped, capTheSupply } = useMyContext();
   return (
-    <div className="bg-[#002233]  h-screen relative">
-      <Typing />
-      <div className="mr-52 ml-52 flex justify-between items-center absolute top-1/3">
+    <div className="h-screen relative">
+      <Card />
+      {/* <Typing /> */}
+      <div className="mr-52 ml-52 flex justify-between items-center absolute top-1/3 bg-black opacity-90 p-20 rounded-xl">
         <div className="w-1/3 flex flex-col gap-10">
           <p className="text-lg">
             Culpa ipsum exercitation esse labore Lorem mollit. Quis magna consectetur duis id consectetur esse eiusmod. Aliqua cillum commodo consequat ea aliqua consequat veniam labore ad amet.
             Culpa ipsum exercitation esse labore Lorem mollit. Quis magna consectetur duis id consectetur esse eiusmod. Aliqua cillum commodo consequat ea aliqua consequat veniam labore ad amet.
             Culpa ipsum exercitation esse labore Lorem mollit. Quis magna consectetur duis id consectetur esse eiusmod. Aliqua cillum commodo consequat ea aliqua consequat veniam labore ad amet.
           </p>
-          <button className="bg-white w-40 h-10 rounded-lg text-[#0066FF]">
+          <button className="title w-40 h-10 rounded-lg">
             Show More!
           </button>
         </div>
 
         {/* Card here! */}
-        <div className="wallet-card rounded-lg">
+        <div className="wallet-card text-white font-medium rounded-lg">
           {
           loading ?
           <div>Loading...</div> :
           (
-            <div className="flex flex-row justify-between p-10  h-96">
+            <div className="flex flex-row justify-between p-10 h-96">
               {
                 walletConnected ? (
-                  <div className="flex flex-col justify-end">
+                  <div className="flex flex-col justify-end text-black">
                       <strong>
                       {provider.publicKey.toString()}
                       </strong>
