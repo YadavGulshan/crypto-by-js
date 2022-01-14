@@ -121,7 +121,7 @@ export default function useSolanaProvider() {
     }
   }
 
-  const capTheSupply =async()=>{
+  const capTheSupply =()=>{
     try{
       setLoading(true);
       capSupply(mintingWalletSecretKey, createdTokenPublicKey);

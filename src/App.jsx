@@ -5,7 +5,8 @@ const App = () => {
     walletConnectionHelper, provider,
     airDropHelper, initialMintHelper,
     supplyCapped, reMintHelper,
-    transferTokenHelper, mintingWalletSecretKey } = useMyContext();
+    transferTokenHelper, mintingWalletSecretKey,
+    isSupplyCapped, capTheSupply } = useMyContext();
   return (
     <>
       <h1>
@@ -45,6 +46,13 @@ const App = () => {
                   Minting Wallet Secret key:
                   {mintingWalletSecretKey}
                 </p>
+                {isSupplyCapped?(<div>
+                    Fuck, Supply is capped
+                </div>):(<div>
+                  <p>Cap the supply
+                    <button onClick={capTheSupply} disabled={isSupplyCapped}>Cap it!</button>
+                  </p>
+                </div>)}
               </div>
             ) : (
               <p>

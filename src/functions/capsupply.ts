@@ -12,4 +12,6 @@ export async function capSupply(mintingWalletSecretKey: string, createdTokenPubl
 
     const creatorToken = new Token(connection, createdTokenPublicKey, TOKEN_PROGRAM_ID, createMintingWallet);
     await creatorToken.setAuthority(createdTokenPublicKey, null, "MintTokens", createMintingWallet.publicKey, [createMintingWallet]);
+
+    alert("The supply has been capped");
 }
