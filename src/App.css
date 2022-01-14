@@ -61,3 +61,30 @@
 path:hover {
     fill: #61dafb;
 }
+
+#bigPolygon {
+    animation: bigpolygon 5s ease infinite;
+    transform-box: fill-box;
+}
+
+@keyframes bigpolygon {
+    from {
+        fill: #282c34;
+    }
+    to {
+        fill: #cbe47a;
+    }
+}
+
+#SmallPolygon {
+    animation: smallpolygon 10s ease infinite;
+}
+
+@keyframes smallpolygon {
+    from {
+        fill: #27D521;
+    }
+    to {
+        fill: #15ecbe;
+    }
+}
